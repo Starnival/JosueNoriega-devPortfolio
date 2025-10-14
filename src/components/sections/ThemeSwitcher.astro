@@ -1,0 +1,224 @@
+---
+// src/components/ThemeSwitcher.astro
+import { Icon } from 'astro-icon/components';
+
+// Asegúrate de que los IDs coincidan con el script de transición circular en tu layout
+const THEME_BUTTON_ID = 'theme-button';
+const BULB_ID = 'bulb-icon'; // ID para el punto de origen del efecto (el botón)
+
+const script = `
+    const STORAGE_KEY = 'theme-preference';
+    const THEME_BUTTON_ID = 'theme-button';
+    const BULB_ID = 'bulb-icon';
+    
+    // --- Lógica del CodePen simplificada y adaptada ---
+    let nightmode = true; 
+    let lastTime = 0;
+    let transitionProgress = 0; // 0 (oscuro) a 100 (claro)
+    let isAnimating = false;
+
+    // --- Interpolación de Colores ---
+    // Definimos los colores de ambos temas para todas las variables
+    const themeColors = {
+        light: {
+            '--fondo-principal': '#f5efe6',
+            '--texto-principal': '#4a413b',
+            '--acento-primario': '#e58b69',
+            // ... añade aquí otras variables que quieras animar
+        },
+        dark: {
+            '--fondo-principal': '#080808',
+            '--texto-principal': '#d1d1d1',
+            '--acento-primario': '#b8735a',
+            // ... y sus correspondientes valores en modo oscuro
+        }
+    };
+
+    // Función para interpolar entre dos colores hexadecimales
+    const interpolateColor = (color1, color2, factor) => {
+        const r1 = parseInt(color1.substring(1, 3), 16);
+        const g1 = parseInt(color1.substring(3, 5), 16);
+        const b1 = parseInt(color1.substring(5, 7), 16);
+        const r2 = parseInt(color2.substring(1, 3), 16);
+        const g2 = parseInt(color2.substring(3, 5), 16);
+        const b2 = parseInt(color2.substring(5, 7), 16);
+        const r = Math.round(r1 + factor * (r2 - r1));
+        const g = Math.round(g1 + factor * (g2 - g1));
+        const b = Math.round(b1 + factor * (b2 - b1));
+        return \`rgb(\${r}, \${g}, \${b})\`;
+    };
+
+    // Función para establecer el atributo data-theme y guardar en localStorage
+    const setPreference = (theme) => {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem(STORAGE_KEY, theme);
+    };
+    
+    // El núcleo de la animación
+    const nightRun = () => {
+        if (!isAnimating) return;
+
+        // Calcular delta tiempo para animación fluida
+        if (lastTime === 0) { lastTime = performance.now(); }
+        const dt = Math.min(50, (performance.now() - lastTime));
+        lastTime = performance.now();
+
+        // Determinar la dirección y actualizar el progreso
+        const targetProgress = nightmode ? 0 : 100; // 0=Dark, 100=Light
+        const progressChange = dt * (nightmode ? -0.08 : 0.08); // Velocidad de transición (mucho más lenta)
+
+        transitionProgress = Math.min(100, Math.max(0, (transitionProgress + progressChange)));		
+        
+        // Función de easing Cosoidal para un efecto de luz natural
+        const nrCos = (1 - Math.cos(transitionProgress / 100 * Math.PI)) / 2;
+        
+        // Elemento para obtener la posición del centro de la "luz"
+        const snmb = document.getElementById(BULB_ID); 
+        const rect = snmb.getBoundingClientRect();
+
+        // ----------------------------------------------------
+        // CALCULAR Y APLICAR GRADIENTE RADIAL PARA EL EFECTO
+        // ----------------------------------------------------
+        
+        // t y b definen el radio del círculo de luz (simulando expansión)
+        const t = Math.max(0, ((nrCos * 200) - 100)); // Punto de inicio del color oscuro
+        const b = Math.min(100, (nrCos * 200));       // Punto de fin del color claro
+        
+        // --- Interpolación de todos los colores del tema ---
+        const factor = transitionProgress / 100; // 0 = oscuro, 1 = claro
+        for (const prop in themeColors.light) {
+            const startColor = themeColors.dark[prop];
+            const endColor = themeColors.light[prop];
+            const interpolatedColor = interpolateColor(startColor, endColor, factor);
+            document.documentElement.style.setProperty(prop, interpolatedColor);
+        }
+
+        // Coordenadas del centro de la luz
+        const centerX = (rect.left + rect.right) / 2;
+        const centerY = (rect.top + rect.height / 2); // Usamos el centro del icono
+
+        let newBg = '';
+
+        if (nightmode) {
+             // Modo Oscuro (se apaga la luz, la luz clara se contrae). Usamos los colores ya interpolados.
+             newBg = \`radial-gradient(circle at \${centerX}px \${centerY}px, var(--fondo-principal) 0%, var(--fondo-principal) \${t}%, \${themeColors.light['--fondo-principal']} \${b}%, \${themeColors.light['--fondo-principal']} 100%)\`;
+             
+        } else {
+            // Modo Claro (se enciende la luz, la luz clara se expande). Usamos los colores ya interpolados.
+            newBg = \`radial-gradient(circle at \${centerX}px \${centerY}px, var(--fondo-principal) 0%, var(--fondo-principal) \${t}%, \${themeColors.dark['--fondo-principal']} \${b}%, \${themeColors.dark['--fondo-principal']} 100%)\`;
+        }
+
+        // Aplicar el fondo animado. Usamos una variable custom para no interferir con tu CSS
+        document.documentElement.style.background = newBg;
+
+        // Control de fin de animación
+        if (transitionProgress !== targetProgress) {
+            requestAnimationFrame(nightRun);
+        } else {
+            // FIN de la animación: Revertir al fondo normal de las variables CSS
+            isAnimating = false;
+            lastTime = 0;
+            // Quitamos todos los estilos en línea para que tu CSS regular tome el control
+            document.documentElement.style.background = '';
+            for (const prop in themeColors.light) {
+                document.documentElement.style.removeProperty(prop);
+            }
+            
+            // Establecemos el tema final para que el CSS de tus colores funcione
+            setPreference(nightmode ? 'dark' : 'light');
+        }	
+    }
+
+    // Función principal de alternancia de tema
+    const toggleTheme = (e) => {
+        // Prevenir el cambio de tema instantáneo de tu componente/script anterior
+        e.preventDefault(); 
+        
+        // Iniciar la animación
+        nightmode = document.documentElement.getAttribute('data-theme') === 'light'; // Si es light, queremos nightmode=true (dark)
+        isAnimating = true;
+        
+        // Esto comienza el bucle requestAnimationFrame
+        nightRun();
+    };
+
+    // 1. Aplicar la preferencia de tema al cargar
+    const initialTheme = localStorage.getItem(STORAGE_KEY) || 
+                         (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    setPreference(initialTheme);
+    nightmode = initialTheme === 'dark'; // Asegurar que nightmode refleje el estado inicial
+    
+    // 2. Adjuntar el listener al botón después de que el DOM esté listo
+    document.addEventListener('DOMContentLoaded', () => {
+        const switchButton = document.getElementById(THEME_BUTTON_ID);
+        if (switchButton) {
+            // Usamos toggleTheme que controla la animación
+            switchButton.addEventListener('click', toggleTheme); 
+        }
+    });
+
+    // 3. Listener para cambios del sistema operativo
+    // ... Puedes omitir o refinar esto ya que la animación debe ser el foco
+`;
+---
+
+<button id={THEME_BUTTON_ID} aria-label="Toggle dark/light theme" title="Alternar tema de color">
+    <span id={BULB_ID}>
+        <Icon name="ui/weather-sunny" class="theme-icon-light" aria-hidden="true" />
+        <Icon name="ui/weather-night" class="theme-icon-dark" aria-hidden="true" />
+    </span>
+</button>
+
+<style>
+    /* Estilos del botón */
+    #theme-button {
+        background-color: transparent; /* Fondo transparente como solicitaste */
+        color: var(--texto-principal);
+        border: none;
+        cursor: pointer;
+        padding: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        outline: none; /* Quitar el borde de foco por defecto */
+        transition:
+            background-color 0.3s,
+            color 0.3s,
+            box-shadow 0.3s;
+    }
+
+    #theme-button:hover {
+        transition: all 0.3s ease-in-out;
+        transform: scale(1.4);
+    }
+
+    /* Estilos para los iconos (mantener la transición de icono que ya tenías) */
+    #bulb-icon {
+        display: contents; /* Para que el span no afecte el layout del botón */
+    }
+    .theme-icon-light,
+    .theme-icon-dark {
+        /* ... Estilos y transiciones de icono que ya tenías ... */
+        width: 1.5rem;
+        height: 1.5rem;
+        position: absolute;
+        /* Transición más suave y solo en opacidad para un efecto de fundido */
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    /* Lógica de ocultar/mostrar iconos */
+    :root[data-theme='light'] .theme-icon-light,
+    :root[data-theme='dark'] .theme-icon-dark {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+    }
+    :root[data-theme='light'] .theme-icon-dark,
+    :root[data-theme='dark'] .theme-icon-light {
+        opacity: 0;
+        pointer-events: none;
+    }
+</style>
+
+<script is:inline set:html={script} />

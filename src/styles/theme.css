@@ -1,0 +1,70 @@
+/*
+ * 1. Definición por defecto (Modo Claro: Lofi Cálido)
+ * Este es el tema base. Se aplica a :root y también cuando data-theme='light'.
+ * Esto evita el "flash of unstyled content" (FOUC).
+ */
+
+:root[data-theme='light'] {
+    /* Fondos */
+    --fondo-principal: #f5efe6;
+    /* Crema cálido */
+    --fondo-secundario: #e8e0d5;
+    /* Beige suave */
+    --fondo-blur: rgba(245, 239, 230, 0.75);
+    /* Crema translúcido para blur */
+
+    /* Textos */
+    --texto-principal: #4a413b;
+    /* Marrón más oscuro para máxima nitidez */
+    --texto-secundario: #6b625c;
+    /* Gris cálido con más contraste (pasa AA) */
+
+    /* Acentos */
+    --acento-primario: #e58b69;
+    /* Terracota */
+    --acento-secundario: #d8b379;
+    /* Oro viejo */
+    --interactivo: #c88e9e;
+    /* Rosa pálido */
+
+    /* Sombras (para neumorphism) */
+    --sombra-oscura: #cabeaf;
+    /* Sombra más definida y cálida */
+    --sombra-clara: #ffffff;
+    /* Luz brillante */
+}
+
+/*
+ * 2. Anulación para el Tema Oscuro (Gamuza Ébano)
+ * Se activa cuando el elemento raíz tiene el atributo data-theme='dark'.
+ */
+
+:root[data-theme='dark'] {
+    /* Fondos */
+    --fondo-principal: #080808;
+    /* Casi negro */
+    --fondo-secundario: #101010;
+    /* Gris muy oscuro, más cercano al principal */
+    --fondo-blur: rgba(16, 16, 16, 0.75);
+    /* Gris oscuro translúcido ajustado */
+
+    /* Textos */
+    --texto-principal: #d1d1d1;
+    /* Gris claro */
+    --texto-secundario: #9e9e9e;
+    /* Gris medio más claro (pasa AA) */
+
+    /* Acentos */
+    --acento-primario: #b8735a;
+    /* Cobre oscuro */
+    --acento-secundario: #9e855d;
+    /* Bronce antiguo */
+    --interactivo: #a37884;
+    /* Rosa viejo */
+
+    /* Sombras (para neumorphism) */
+    --sombra-oscura: #000000;
+    /* Sombra oscura pura */
+    --sombra-clara: #1f1f1f;
+    /* Luz muy sutil para un efecto profundo */
+}

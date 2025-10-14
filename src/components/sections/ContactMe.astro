@@ -1,0 +1,48 @@
+---
+import { Icon } from 'astro-icon/components';
+import GridItem from '../base/GridItem.astro';
+import { basics } from '../../content/resume.json';
+const { class: className, ...rest } = Astro.props;
+const { email, phone, url } = basics;
+const h = 'email';
+---
+
+<GridItem class:list={['section-contact-me', className]} {...rest}>
+    <h2>Contrata me</h2>
+
+    <div class="contact-me-links">
+        <a href={`mailto:${email}`}>
+            <span><Icon name="contact-me/email" class="contact-me-icon" /></span>
+            {email}
+        </a>
+
+        <a href={`tel:${phone}`}>
+            <span><Icon name="contact-me/whatsapp" class="contact-me-icon" /></span>
+            {phone}
+        </a>
+
+        <a href={url}>
+            <span><Icon name="contact-me/web" class="contact-me-icon" /></span>
+            {url}
+        </a>
+    </div>
+</GridItem>
+
+<style>
+    .section-contact-me {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .contact-me-links {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .contact-me-icon {
+            color: var(--interactivo);
+        }
+    }
+</style>

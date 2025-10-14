@@ -1,0 +1,66 @@
+body {
+    font-family: 'Fira Code Variable', monospace;
+}
+
+:root {
+    --text-size-title: 2.5rem;
+    --text-size-subtitle: 1.2rem;
+    --text-size-paragraph: 1rem;
+    --text-size-small: 0.75rem;
+}
+
+h1 {
+    color: var(--texto-principal);
+    font-size: var(--text-size-title);
+    font-weight: 900;
+    line-height: 1.2;
+}
+
+h2 {
+    color: var(--texto-principal);
+    font-size: var(--text-size-subtitle);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+h3 {
+    color: var(--texto-principal);
+    font-size: var(--text-size-subtitle);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+h4 {
+    color: var(--texto-principal);
+    font-size: var(--text-size-subtitle);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+p {
+    color: var(--texto-principal);
+    font-size: var(--text-size-paragraph);
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+a {
+    color: var(--acento-secundario);
+    text-decoration: none;
+    font-size: var(--text-size-small);
+
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+        transition: color 0.3s ease-in-out;
+        text-decoration: underline;
+        font-style: bold;
+
+        transform: scale(1.1);
+    }
+}
+
+small {
+    color: var(--acento-secundario);
+    font-size: var(--text-size-small);
+}

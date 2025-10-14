@@ -1,0 +1,34 @@
+---
+import GridItem from '../base/GridItem.astro';
+import { Image } from 'astro:assets';
+import { basics } from '../../content/resume.json';
+
+
+const { image } = basics;
+const { class: className, ...rest } = Astro.props;
+
+---
+
+<Image
+    class:list={['section-photo', className]} {...rest}
+    src={image} 
+    alt="Foto de mi perfil"
+    width={100}
+    height={100}
+    quality={85}
+    format="webp"
+    loading={'eager'}
+/>
+
+
+<style>
+    .section-photo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 8px;
+        background-color: var(--color-bg-primary);
+        box-shadow: 0 0 0 1px var(--color-bg-secondary);
+        overflow: hidden;
+    }
+</style>

@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/baseLayout.astro';
+import GridItem from '../components/base/GridItem.astro';
+import Name from '../components/sections/Name.astro';
+import AboutMe from '../components/sections/AboutMe.astro';
+import Photo from '../components/sections/Photo.astro';
+import ContactMe from '../components/sections/ContactMe.astro';
+import ThemeSwitcher from '../components/sections/ThemeSwitcher.astro';
+import Resource from '../components/sections/Resource.astro';
+import Technologies from '../components/sections/Technologies.astro';
+import Projects from '../components/sections/Projects.astro';
+import Footer from '../components/sections/Footer.astro';
+---
+
+<BaseLayout>
+    <main class="layout">
+        <Name class="name" />
+        <AboutMe class="about-me" />
+        <Photo class="photo" />
+        <ContactMe class="contact-me" />
+        <ThemeSwitcher />
+        <Resource class="resource" />
+        <Technologies class="technologies" />
+        <Projects class="projects" />
+        <Footer class="footer" />
+    </main>
+</BaseLayout>

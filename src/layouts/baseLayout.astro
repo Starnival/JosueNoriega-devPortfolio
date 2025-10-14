@@ -1,0 +1,83 @@
+---
+import '../styles/normalize.css';
+import '../styles/theme.css';
+import '@fontsource-variable/fira-code';
+import '../styles/typography.css';
+import '../styles/global.css';
+---
+
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <title>Astro</title>
+    </head>
+    <body>
+        <slot />
+    </body>
+</html>
+
+<style is:global>
+    body {
+        /* Centra el contenido principal en la pantalla */
+        width: 100%;
+        min-height: 100vh;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--fondo-principal);
+    }
+
+    .layout {
+        max-width: 1440px; /* Ancho máximo de la pantalla */
+        width: 100%; /* Ocupa el espacio disponible hasta el máximo */
+        max-height: 100vh; /* Ocupa el espacio disponible hasta el máximo */
+
+        padding: 8px; /* Mantiene un pequeño espacio para que los items no se peguen a los bordes */
+        box-sizing: border-box; /* Asegura que el padding no aumente el tamaño total */
+
+        display: grid;
+        grid:
+            'name name name about-me about-me about-me about-me about-me about-me about-me photo photo' 1fr
+            'contact-me contact-me contact-me about-me about-me about-me about-me about-me about-me about-me photo photo' 1fr
+            'technologies projects projects projects projects projects projects projects projects projects theme-switcher theme-switcher' 1fr
+            'technologies projects projects projects projects projects projects projects projects projects resource resource' 1fr
+            'technologies projects projects projects projects projects projects projects projects projects resource resource' 1fr
+            'technologies projects projects projects projects projects projects projects projects projects resource resource' 1fr
+            'technologies projects projects projects projects projects projects projects projects projects footer footer' 1fr
+            / 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        gap: 14px;
+        overflow: hidden;
+    }
+
+    .name {
+        grid-area: name;
+    }
+    .about-me {
+        grid-area: about-me;
+    }
+    .photo {
+        grid-area: photo;
+    }
+    .contact-me {
+        grid-area: contact-me;
+    }
+    .theme-switcher {
+        grid-area: theme-switcher;
+    }
+    .resource {
+        grid-area: resource;
+    }
+    .technologies {
+        grid-area: technologies;
+    }
+    .projects {
+        grid-area: projects;
+    }
+    .footer {
+        grid-area: footer;
+    }
+</style>

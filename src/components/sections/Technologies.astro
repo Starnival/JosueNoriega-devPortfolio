@@ -1,0 +1,42 @@
+---
+import GridItem from '../base/GridItem.astro';
+import { Icon } from 'astro-icon/components';
+import { technologies } from '../../content/resume.json';
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<GridItem class:list={['section-technologies', className]} {...rest}>
+    <div>
+        <ul>
+            {
+                technologies.map(({ name }) => (
+                    <li>
+                        <Icon class="technologies-icon" name={`technologies/${name}`} />
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
+</GridItem>
+
+<style>
+    .section-technologies {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+
+        ul {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .technologies-icon {
+            width: 36px;
+            height: 36px;
+        }
+    }
+</style>

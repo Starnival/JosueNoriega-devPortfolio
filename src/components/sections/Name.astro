@@ -1,0 +1,21 @@
+---
+import GridItem from '../base/GridItem.astro';
+import { basics } from '../../content/resume.json';
+const { class: className, ...rest } = Astro.props;
+const { name } = basics;
+---
+
+
+<GridItem class:list={['section-name', className]} {...rest}>
+    <h1>{name}</h1>
+</GridItem>
+
+<style>
+    .section-name {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+</style>
