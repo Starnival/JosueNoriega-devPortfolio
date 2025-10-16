@@ -2,7 +2,7 @@
     "basics": {
         "name": "Josue Noriega",
         "labels": ["Programmer", "Teacher"],
-        "image": "/src/assets/images/basics/photo.webp",
+        "image": "/images/basics/photo.webp",
         "email": "josuenoriega.dev@gmail.com",
         "phone": "(+58) 424-234.5678",
         "url": "https://josuenoriega.dev.com",
@@ -80,7 +80,7 @@
             "technologies": ["Astro", "TypeScript", "Neumorfismo CSS", "Grid CSS"],
             "highlights": ["Alto rendimiento (100% Lighthouse)", "Ganador en AIHacks 2016"],
             "url": "https://project.com/",
-            "imageURL": "/src/assets/images/projects/portfolio-hero.webp"
+            "imageURL": "/images/projects/portfolio-hero.webp"
         },
         {
             "id": "p02",
@@ -92,7 +92,7 @@
             "technologies": ["React", "Node.js", "Express", "MongoDB", "Stripe API"],
             "highlights": ["Procesamiento de pagos en tiempo real.", "API RESTful para la gestión de datos."],
             "url": "https://shopsphere.example.com/",
-            "imageURL": "/src/assets/images/projects/shopsphere.webp"
+            "imageURL": "/images/projects/shopsphere.webp"
         },
         {
             "id": "p03",
@@ -104,7 +104,7 @@
             "technologies": ["React Native", "Expo", "API REST", "JavaScript"],
             "highlights": ["Uso de geolocalización para datos precisos.", "Interfaz de usuario limpia y animada."],
             "url": "https://climanow.example.com/",
-            "imageURL": "/src/assets/images/projects/climanow.webp"
+            "imageURL": "/images/projects/climanow.webp"
         },
         {
             "id": "p04",
@@ -119,7 +119,7 @@
                 "Sistema de autenticación JWT."
             ],
             "url": "https://inkwell.example.com/",
-            "imageURL": "/src/assets/images/projects/inkwell.webp"
+            "imageURL": "/images/projects/inkwell.webp"
         },
         {
             "id": "p05",
@@ -134,7 +134,7 @@
                 "Interfaz interactiva con drag-and-drop."
             ],
             "url": "https://taskflow.example.com/",
-            "imageURL": "/src/assets/images/projects/taskflow.webp"
+            "imageURL": "/images/projects/taskflow.webp"
         },
         {
             "id": "p06",
@@ -149,7 +149,7 @@
                 "Alto rendimiento en la renderización de gráficos."
             ],
             "url": "https://dataviz.example.com/",
-            "imageURL": "/src/assets/images/projects/dataviz.webp"
+            "imageURL": "/images/projects/dataviz.webp"
         },
         {
             "id": "p07",
@@ -164,7 +164,7 @@
                 "Base de datos relacional gestionada con Prisma ORM."
             ],
             "url": "https://codeconnect.example.com/",
-            "imageURL": "/src/assets/images/projects/codeconnect.webp"
+            "imageURL": "/images/projects/codeconnect.webp"
         }
     ]
 }
