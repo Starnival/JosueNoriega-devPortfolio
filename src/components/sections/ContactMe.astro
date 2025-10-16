@@ -1,15 +1,13 @@
 ---
 import { Icon } from 'astro-icon/components';
 import GridItem from '../base/GridItem.astro';
-import { basics } from '../../content/resume.json';
+import { basics } from '../../data/resume.json';
 const { class: className, ...rest } = Astro.props;
 const { email, phone, url } = basics;
-const h = 'email';
 ---
 
 <GridItem class:list={['section-contact-me', className]} {...rest}>
-    <h2>Contrata me</h2>
-
+    <h2>Contacta Me</h2>
     <div class="contact-me-links">
         <a href={`mailto:${email}`}>
             <span><Icon name="contact-me/email" class="contact-me-icon" /></span>
@@ -33,7 +31,7 @@ const h = 'email';
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: space-between;
+        justify-content: space-around;
     }
 
     .contact-me-links {

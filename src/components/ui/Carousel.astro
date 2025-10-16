@@ -1,0 +1,366 @@
+---
+import ProjectCard from './ProjectCard.astro';
+import { projects } from '../../data/resume.json';
+---
+
+<div class="container" aria-label="Galería de Proyectos">
+    <div class="carousel">
+        <button class="carousel__nav-button carousel__prev" aria-label="Proyecto anterior">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1"
+                stroke="currentColor"
+                class="slider-icon"
+            >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"></path>
+            </svg>
+        </button>
+        <ul class="carousel__viewport">
+            {
+                projects.map((project) => (
+                    <li class="carousel__slide" data-slide-id={project.id}>
+                        <ProjectCard {project} />
+                    </li>
+                ))
+            }
+        </ul>
+        <button class="carousel__nav-button carousel__next" aria-label="Proyecto siguiente">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1"
+                stroke="currentColor"
+                class="slider-icon"
+            >
+                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"></path>
+            </svg>
+        </button>
+    </div>
+    <div class="carousel__navigation">
+        <ol class="carousel__navigation-list">
+            <!-- Los indicadores de navegación se generan dinámicamente con JavaScript -->
+        </ol>
+    </div>
+</div>
+
+<style>
+    .carousel {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+
+        width: 100%; /* Para que el contenido se expanda al 100% del ancho */
+
+        position: relative; /* Necesario para posicionar las flechas */
+    }
+
+    .carousel__viewport {
+        height: 100%;
+        display: flex;
+        flex-direction: row; /* Para scroll horizontal */
+        overflow-x: scroll;
+        scroll-snap-type: x mandatory;
+        scroll-padding-left: 1.5rem;
+        scroll-behavior: smooth;
+        gap: 1.5rem;
+        padding: 0 1.5rem 1rem 1.5rem;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    /* Ocultar scrollbar en navegadores basados en Webkit */
+    .carousel__viewport::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Cada slide con scroll snap */
+    .carousel__slide {
+        /* En móvil, cada tarjeta ocupa el 90% para mostrar un adelanto de la siguiente */
+        flex: 0 0 90%;
+        scroll-snap-align: start;
+        box-sizing: border-box;
+        position: relative;
+    }
+
+    /* Para tablets, mostramos 2 tarjetas */
+    @media (min-width: 768px) {
+        .carousel__slide {
+            /* (100% de ancho - 1rem de gap) / 2 tarjetas */
+            flex-basis: calc((100% - 1rem) / 2);
+        }
+    }
+
+    /* Para escritorio, mostramos 3 tarjetas */
+    @media (min-width: 1024px) {
+        .carousel__slide {
+            /* (100% de ancho - 2rem de gaps) / 3 tarjetas */
+            flex-basis: calc((100% - 2rem) / 3);
+            scroll-snap-align: start; /* Asegura el anclaje correcto en vistas de 3 */
+        }
+    }
+
+    /* Estilos para flechas de navegación */
+    .carousel__nav-button {
+        position: absolute;
+        height: 80%;
+        top: 0;
+        bottom: 1rem; /* Alineado con el padding-bottom del viewport */
+        background: none;
+        border: none;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transition:
+            background 0.3s ease,
+            opacity 0.3s ease,
+            visibility 0.3s ease;
+        z-index: 10;
+        width: 5rem;
+        will-change: opacity, background;
+        background: transparent; /* Fondo transparente por defecto */
+    }
+
+    /* 💡 MEJORA: Se activa con hover o al navegar con teclado */
+    .carousel:hover .carousel__nav-button,
+    .carousel:focus-within .carousel__nav-button {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .carousel__nav-button .slider-icon {
+        width: 36px;
+        height: 36px;
+        color: var(--interactivo);
+        filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.6));
+        transition: transform 0.2s ease;
+        will-change: transform;
+    }
+
+    .carousel__nav-button:hover {
+        background: linear-gradient(to right, rgba(0, 0, 0, 0.15), transparent);
+    }
+    .carousel__nav-button:hover .slider-icon {
+        transform: scale(1.15);
+    }
+
+    .carousel__nav-button.is-disabled {
+        opacity: 0 !important; /* Ocultar si está deshabilitado, incluso en hover/focus */
+        pointer-events: none;
+        cursor: default;
+    }
+
+    .carousel__prev {
+        left: 0;
+        background: linear-gradient(to right, rgba(0, 0, 0, 0.1), transparent);
+    }
+
+    .carousel__next {
+        right: 0;
+        background: linear-gradient(to left, rgba(0, 0, 0, 0.1), transparent);
+    }
+
+    /* Ocultar paneles en dispositivos táctiles o pantallas pequeñas */
+    @media (max-width: 767px) {
+        .carousel__nav-button {
+            display: none;
+        }
+    }
+
+    .carousel__navigation {
+        display: flex;
+        justify-content: center;
+        padding: 0 1.5rem;
+        margin-top: 0.5rem; /* Espacio entre carrusel y puntos */
+    }
+
+    .carousel__navigation-list {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .carousel__navigation-indicator {
+        /* Contenedor para el SVG, NO INTERACTIVO */
+        padding: 4px; /* Área visual más grande */
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: default; /* Asegura que no se vea como clicable */
+    }
+
+    .carousel__navigation-dot {
+        width: 12px;
+        height: 12px;
+        fill: var(--texto-secundario); /* Color del punto inactivo */
+        transition: all 0.3s ease-in-out;
+        filter: drop-shadow(1px 1px 1px var(--sombra-oscura-fuerte))
+            drop-shadow(-1px -1px 1px var(--sombra-clara-suave));
+    }
+
+    .carousel__navigation-indicator.is-active .carousel__navigation-dot {
+        fill: var(--acento-primario); /* Color del punto activo */
+    }
+</style>
+
+<script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+        const carousel = document.querySelector('.carousel');
+        if (!carousel) return;
+
+        const viewport = carousel.querySelector('.carousel__viewport');
+        const prevButton = carousel.querySelector('.carousel__prev');
+        const nextButton = carousel.querySelector('.carousel__next');
+        const slides = carousel.querySelectorAll('.carousel__slide');
+        const navContainer = document.querySelector('.carousel__navigation-list');
+
+        if (!viewport || !prevButton || !nextButton || !slides.length || !navContainer) return;
+
+        let isScrolling;
+        let slidesPerPage = 1; // Necesario para calcular las 'páginas'
+        let navIndicators = []; // Los spans visuales que se generan
+
+        const updateButtonState = () => {
+            const scrollLeft = viewport.scrollLeft;
+            const scrollWidth = viewport.scrollWidth;
+            const clientWidth = viewport.clientWidth;
+            const tolerance = 1;
+
+            prevButton.classList.toggle('is-disabled', scrollLeft <= tolerance);
+            nextButton.classList.toggle('is-disabled', scrollLeft + clientWidth >= scrollWidth - tolerance);
+        };
+
+        const updateSlidesPerPage = () => {
+            const slideWidth = slides[0]?.offsetWidth || 0;
+            if (slideWidth > 0) {
+                const viewportWidth = viewport.clientWidth;
+                const gap = parseFloat(getComputedStyle(viewport).gap) || 0;
+                // Cálculo de la cantidad de slides que caben en la vista
+                slidesPerPage = Math.round(viewportWidth / (slideWidth + gap));
+            }
+            // Aseguramos que sea al menos 1
+            slidesPerPage = Math.max(1, slidesPerPage);
+            return slidesPerPage;
+        };
+
+        // Función para crear el SVG del punto
+        const createDotSvg = () => {
+            const svgNS = 'http://www.w3.org/2000/svg';
+            const svg = document.createElementNS(svgNS, 'svg');
+            svg.setAttribute('class', 'carousel__navigation-dot');
+            svg.setAttribute('viewBox', '0 0 12 12');
+            svg.setAttribute('aria-hidden', 'true');
+            const circle = document.createElementNS(svgNS, 'circle');
+            circle.setAttribute('cx', '6');
+            circle.setAttribute('cy', '6');
+            circle.setAttribute('r', '5');
+            svg.appendChild(circle);
+            return svg;
+        };
+
+        // Genera los indicadores visuales basados en el cálculo de páginas
+        const createNavigation = () => {
+            navContainer.innerHTML = ''; // Limpiar navegación existente
+
+            const numPages = Math.ceil(slides.length / slidesPerPage);
+
+            if (numPages <= 1) return;
+
+            for (let i = 0; i < numPages; i++) {
+                const li = document.createElement('li');
+                li.className = 'carousel__navigation-item';
+
+                // Usamos <span> en lugar de <button> para eliminar la interacción
+                const indicator = document.createElement('span');
+                indicator.className = 'carousel__navigation-indicator';
+                // Añadimos el índice de página para updateActiveNav
+                indicator.dataset.pageIndex = i;
+                indicator.setAttribute('aria-hidden', 'true'); // PURAMENTE DECORATIVO
+
+                indicator.appendChild(createDotSvg());
+                li.appendChild(indicator);
+                navContainer.appendChild(li);
+            }
+
+            // Recogemos todos los indicadores generados
+            navIndicators = navContainer.querySelectorAll('.carousel__navigation-indicator');
+        };
+
+        // Actualiza el estado visual del indicador
+        const updateActiveNav = () => {
+            if (navIndicators.length === 0) return;
+
+            const scrollLeft = viewport.scrollLeft;
+            const viewportWidth = viewport.clientWidth;
+
+            // La página activa es la que está más cerca del inicio
+            const currentPage = Math.round(scrollLeft / viewportWidth);
+
+            navIndicators.forEach((indicator, index) => {
+                // Si el índice del indicador coincide con la página actual
+                const isActive = index === currentPage;
+                indicator.classList.toggle('is-active', isActive);
+            });
+        };
+
+        const setupCarousel = () => {
+            updateSlidesPerPage();
+            createNavigation(); // Se vuelve a crear la navegación si cambia el tamaño
+            updateButtonState();
+            updateActiveNav();
+        };
+
+        // --- Lógica de Scroll y Resize (Mantenida) ---
+
+        // ResizeObserver para re-calcular en cambios de tamaño
+        const resizeObserver = new ResizeObserver(() => {
+            const newSlidesPerPage = updateSlidesPerPage();
+            // Solo recreamos la navegación si cambia el número de páginas
+            if (navIndicators.length !== Math.ceil(slides.length / newSlidesPerPage)) {
+                setupCarousel();
+            } else {
+                // Si solo cambia el scroll, actualizamos el estado
+                updateButtonState();
+                updateActiveNav();
+            }
+        });
+
+        resizeObserver.observe(viewport);
+
+        // Escuchar el evento de scroll para actualizar el estado del progreso
+        viewport.addEventListener(
+            'scroll',
+            () => {
+                window.cancelAnimationFrame(isScrolling);
+                isScrolling = window.requestAnimationFrame(() => {
+                    updateButtonState();
+                    updateActiveNav();
+                });
+            },
+            { passive: true },
+        );
+
+        // También actualizamos al finalizar el scroll suave
+        viewport.addEventListener('scrollend', updateButtonState);
+
+        const scrollAmount = () => viewport.offsetWidth;
+
+        // Botones de navegación (las flechas SÍ son interactivas)
+        prevButton.addEventListener('click', () => {
+            viewport.scrollBy({ left: -scrollAmount(), behavior: 'smooth' });
+        });
+
+        nextButton.addEventListener('click', () => {
+            viewport.scrollBy({ left: scrollAmount(), behavior: 'smooth' });
+        });
+
+        // Comprobar el estado inicial al cargar la página
+        setupCarousel();
+    });
+</script>

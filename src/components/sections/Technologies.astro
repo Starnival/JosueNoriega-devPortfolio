@@ -1,7 +1,7 @@
 ---
 import GridItem from '../base/GridItem.astro';
 import { Icon } from 'astro-icon/components';
-import { technologies } from '../../content/resume.json';
+import { technologies } from '../../data/resume.json';
 
 const { class: className, ...rest } = Astro.props;
 ---
@@ -21,6 +21,9 @@ const { class: className, ...rest } = Astro.props;
 </GridItem>
 
 <style>
+    .technologies {
+        padding: 12px;
+    }
     .section-technologies {
         display: flex;
         flex-direction: column;
@@ -32,11 +35,30 @@ const { class: className, ...rest } = Astro.props;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 12px;
+
+            li {
+                margin: 0;
+                padding: 0;
+            }
         }
+
+        /* Efecto Lupa */
+        ul:hover .technologies-icon {
+            transform: scale(0.8); /* Reduce los íconos cuando el cursor está sobre la lista */
+        }
+
         .technologies-icon {
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
+            /* Transición más suave para un efecto más fluido */
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            will-change: transform; /* Optimización para la animación */
+
+            /* El ícono seleccionado se agranda más */
+            li:hover & {
+                transform: scale(1.5);
+            }
         }
     }
 </style>

@@ -1,0 +1,139 @@
+---
+const { projectsCount } = Astro.props;
+---
+
+<script define:vars={{ projectsCount }}>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- 1. Selección de Elementos del DOM ---
+        const carousel = document.getElementById('projects-carousel');
+        const dotsContainer = document.getElementById('carousel-dots');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+
+        // Salir si algún elemento esencial no existe o no hay proyectos
+        if (!carousel || !dotsContainer || !prevBtn || !nextBtn || projectsCount === 0) {
+            // Ocultar controles si no son necesarios
+            if (document.querySelector('.carousel-controls')) {
+                document.querySelector('.carousel-controls').style.display = 'none';
+            }
+            return;
+        }
+
+        // --- 2. Estado del Carrusel ---
+        let currentFirstVisibleIndex = 0;
+
+        // --- 3. Funciones del Carrusel ---
+
+        /**
+         * Crea los puntos de navegación y les asigna eventos.
+         */
+        const initializeDots = () => {
+            dotsContainer.innerHTML = ''; // Limpiar puntos existentes
+            for (let i = 0; i < projectsCount; i++) {
+                const dot = document.createElement('button'); // Usar botones para accesibilidad
+                dot.className = 'dot';
+                dot.setAttribute('data-index', i.toString());
+                dot.setAttribute('aria-label', `Ir al proyecto ${i + 1}`);
+                dot.addEventListener('click', () => scrollToCard(i));
+                dotsContainer.appendChild(dot);
+            }
+        };
+
+        /**
+         * Desplaza el carrusel a la tarjeta con el índice especificado.
+         * @param {number} index - El índice de la tarjeta a la que desplazarse.
+         */
+        const scrollToCard = (index) => {
+            const targetCard = carousel.querySelector(`.carousel-item[data-index="${index}"]`);
+            if (targetCard) {
+                const scrollPadding = parseFloat(getComputedStyle(carousel).scrollPaddingLeft);
+                const scrollPosition = targetCard.offsetLeft - scrollPadding;
+                carousel.scrollTo({ left: scrollPosition, behavior: 'smooth' });
+            }
+        };
+
+        /**
+         * Actualiza la clase 'active' en los puntos de navegación.
+         * @param {number} activeIndex - El índice del punto que debe estar activo.
+         */
+        const updateDots = (activeIndex) => {
+            const dots = dotsContainer.querySelectorAll('.dot');
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === activeIndex);
+            });
+        };
+
+        /**
+         * Habilita o deshabilita los botones de navegación según la posición.
+         * @param {number} firstVisibleIndex - El índice de la primera tarjeta visible.
+         * @param {number} lastVisibleIndex - El índice de la última tarjeta visible.
+         */
+        const updateButtonState = (firstVisibleIndex, lastVisibleIndex) => {
+            prevBtn.disabled = firstVisibleIndex === 0;
+            nextBtn.disabled = lastVisibleIndex >= projectsCount - 1;
+        };
+
+        // --- 4. Lógica de Observación de Intersección ---
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                const visibleEntries = entries.filter((entry) => entry.isIntersecting);
+                if (visibleEntries.length === 0) return;
+
+                visibleEntries.sort(
+                    (a, b) => a.target.getBoundingClientRect().left - b.target.getBoundingClientRect().left,
+                );
+
+                const firstVisibleCard = visibleEntries[0].target;
+                const lastVisibleCard = visibleEntries[visibleEntries.length - 1].target;
+
+                const firstIndex = parseInt(firstVisibleCard.dataset.index, 10);
+                const lastIndex = parseInt(lastVisibleCard.dataset.index, 10);
+
+                currentFirstVisibleIndex = firstIndex;
+                updateDots(firstIndex);
+                updateButtonState(firstIndex, lastIndex);
+            },
+            {
+                root: carousel,
+                threshold: 0.6, // La tarjeta debe ser visible en un 60%
+            },
+        );
+
+        const cards = carousel.querySelectorAll('.carousel-item[data-index]');
+        cards.forEach((card) => observer.observe(card));
+
+        // --- 5. Manejadores de Eventos para Botones ---
+
+        prevBtn.addEventListener('click', () => {
+            const newIndex = Math.max(0, currentFirstVisibleIndex - 1);
+            scrollToCard(newIndex);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            const newIndex = Math.min(projectsCount - 1, currentFirstVisibleIndex + 1);
+            scrollToCard(newIndex);
+        });
+
+        // --- 6. Inicialización ---
+        initializeDots();
+        // Estado inicial al cargar la página
+        // Forzamos una comprobación inicial por si el observer no se dispara al cargar
+        setTimeout(() => {
+            const firstVisible = carousel.querySelector('.carousel-item[data-index="0"]');
+            if (firstVisible) {
+                const firstIndex = 0;
+                const lastVisibleCard = Array.from(cards).find((card) => {
+                    const rect = card.getBoundingClientRect();
+                    return rect.right > carousel.getBoundingClientRect().right;
+                });
+                const lastIndex = lastVisibleCard
+                    ? parseInt(lastVisibleCard.dataset.index, 10) - 1
+                    : projectsCount - 1;
+
+                updateDots(firstIndex);
+                updateButtonState(firstIndex, lastIndex);
+            }
+        }, 100);
+    });
+</script>

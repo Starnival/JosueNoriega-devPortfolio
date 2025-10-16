@@ -21,17 +21,29 @@ import '../styles/global.css';
 
 <style is:global>
     body {
-        /* Centra el contenido principal en la pantalla */
         width: 100%;
         min-height: 100vh;
 
-        display: flex;
-        justify-content: center;
-        align-items: center;
         background-color: var(--fondo-principal);
+        /* 💡 Centrado vertical y horizontal del layout principal */
+        display: grid;
+        place-items: center;
+    }
+
+    /* 
+     * Estilos Globales para el efecto Blur del Modal.
+     * Se aplica solo al layout principal cuando el modal está activo.
+    */
+    body.modal-active .layout {
+        transition: filter 0.3s ease-in-out;
+        filter: blur(5px) grayscale(0.2);
+        /* Deshabilitamos interacciones con el fondo */
+        pointer-events: none;
     }
 
     .layout {
+        /* Centrado automático del contenedor principal */
+        margin: 0 auto;
         max-width: 1440px; /* Ancho máximo de la pantalla */
         width: 100%; /* Ocupa el espacio disponible hasta el máximo */
         max-height: 100vh; /* Ocupa el espacio disponible hasta el máximo */
@@ -41,16 +53,15 @@ import '../styles/global.css';
 
         display: grid;
         grid:
-            'name name name about-me about-me about-me about-me about-me about-me about-me photo photo' 1fr
-            'contact-me contact-me contact-me about-me about-me about-me about-me about-me about-me about-me photo photo' 1fr
-            'technologies projects projects projects projects projects projects projects projects projects theme-switcher theme-switcher' 1fr
+            'name name name about-me about-me about-me about-me about-me about-me theme-switcher photo photo' 0.5fr
+            'contact-me contact-me contact-me about-me about-me about-me about-me about-me about-me theme-switcher photo photo' 1fr
+            'technologies projects projects projects projects projects projects projects projects projects resource resource' 0.2fr
+            'technologies projects projects projects projects projects projects projects projects projects resource resource' 1.5fr
             'technologies projects projects projects projects projects projects projects projects projects resource resource' 1fr
             'technologies projects projects projects projects projects projects projects projects projects resource resource' 1fr
-            'technologies projects projects projects projects projects projects projects projects projects resource resource' 1fr
-            'technologies projects projects projects projects projects projects projects projects projects footer footer' 1fr
-            / 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+            'technologies projects projects projects projects projects projects projects projects projects footer footer' 0.5fr
+            / 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1.3fr 0.7fr 1fr 1fr;
         gap: 14px;
-        overflow: hidden;
     }
 
     .name {

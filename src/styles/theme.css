@@ -1,37 +1,27 @@
 /*
- * 1. Definición por defecto (Modo Claro: Lofi Cálido)
- * Este es el tema base. Se aplica a :root y también cuando data-theme='light'.
- * Esto evita el "flash of unstyled content" (FOUC).
+ * 1. Definición por defecto (Modo Claro: Gris Neumórfico Profundo)
+ * Se aplica a :root y también cuando data-theme='light'.
  */
-
 :root[data-theme='light'] {
     /* Fondos */
-    --fondo-principal: #f5efe6;
-    /* Crema cálido */
-    --fondo-secundario: #e8e0d5;
-    /* Beige suave */
-    --fondo-blur: rgba(245, 239, 230, 0.75);
-    /* Crema translúcido para blur */
+    --fondo-principal: #e0e5ec; /* Base Gris Azulado (BASE) */
+    --fondo-secundario: #e0e5ec; /* Paneles usan el mismo color que el fondo */
+    --fondo-blur: rgba(224, 229, 236, 0.9); /* Gris Azulado translúcido */
 
-    /* Textos */
-    --texto-principal: #4a413b;
-    /* Marrón más oscuro para máxima nitidez */
-    --texto-secundario: #6b625c;
-    /* Gris cálido con más contraste (pasa AA) */
+    /* Textos (Asegurar contraste en #e0e5ec) */
+    --texto-principal: #3a3a3a; /* Gris oscuro para contraste */
+    --texto-secundario: #130202; /* Gris medio */
 
     /* Acentos */
-    --acento-primario: #e58b69;
-    /* Terracota */
-    --acento-secundario: #d8b379;
-    /* Oro viejo */
-    --interactivo: #c88e9e;
-    /* Rosa pálido */
+    --acento-primario: #5b79d6; /* Azul brillante para elementos interactivos */
+    --acento-secundario: #8c9dd3; /* Azul suave */
+    --interactivo: #000000; /* Igual que el primario */
 
-    /* Sombras (para neumorphism) */
-    --sombra-oscura: #cabeaf;
-    /* Sombra más definida y cálida */
-    --sombra-clara: #ffffff;
-    /* Luz brillante */
+    /* --- SOMBRAS OPTIMIZADAS PARA NEUMORFISMO PROFUNDO --- */
+    /* Sombra oscura: Un tono notablemente más oscuro que #e0e5ec */
+    --sombra-oscura-fuerte: #a7a9ae;
+    /* Sombra clara: Blanco puro (luz fuerte) */
+    --sombra-clara-suave: #ffffff;
 }
 
 /*
@@ -42,29 +32,21 @@
 :root[data-theme='dark'] {
     /* Fondos */
     --fondo-principal: #080808;
-    /* Casi negro */
-    --fondo-secundario: #101010;
-    /* Gris muy oscuro, más cercano al principal */
+    --fondo-secundario: #101010; /* Gris muy oscuro (Fondo de los paneles) */
     --fondo-blur: rgba(16, 16, 16, 0.75);
-    /* Gris oscuro translúcido ajustado */
 
-    /* Textos */
+    /* Textos (Mantenidos para buen contraste) */
     --texto-principal: #d1d1d1;
-    /* Gris claro */
     --texto-secundario: #9e9e9e;
-    /* Gris medio más claro (pasa AA) */
 
-    /* Acentos */
+    /* Acentos (Mantenidos) */
     --acento-primario: #b8735a;
-    /* Cobre oscuro */
     --acento-secundario: #9e855d;
-    /* Bronce antiguo */
     --interactivo: #a37884;
-    /* Rosa viejo */
 
-    /* Sombras (para neumorphism) */
-    --sombra-oscura: #000000;
-    /* Sombra oscura pura */
-    --sombra-clara: #1f1f1f;
-    /* Luz muy sutil para un efecto profundo */
+    /* --- SOMBRAS OPTIMIZADAS PARA NEUMORFISMO (OSCURO) --- */
+    /* La sombra debe ser el color más oscuro disponible */
+    --sombra-oscura-fuerte: #000000; /* Negro puro para máxima profundidad */
+    /* La luz debe ser sólo un toque más claro que el fondo: #101010 */
+    --sombra-clara-suave: #222222; /* Gris muy oscuro, pero visible */
 }

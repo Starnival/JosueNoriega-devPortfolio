@@ -1,14 +1,13 @@
 ---
-import GridItem from "../base/GridItem.astro";
+import GridItem from '../base/GridItem.astro';
 
 const { class: className, ...rest } = Astro.props;
 ---
 
-<GridItem class:list={["section-footer", className]} {...rest}>
-  <footer class="footer">
-    <p class="text-center">
-      <small>
-        Copyright © 2022 JosueNoriega.Dev Inc. All rights reserved.
-      </small>
-  </footer>
+<GridItem class:list={['section-footer', className]} {...rest}>
+    <footer class="footer">
+        <p class="text-center">
+            <small> Copyright © 2022 JosueNoriega.Dev Inc. All rights reserved. </small>
+        </p>
+    </footer>
 </GridItem>

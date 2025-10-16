@@ -1,0 +1,170 @@
+{
+    "basics": {
+        "name": "Josue Noriega",
+        "labels": ["Programmer", "Teacher"],
+        "image": "/src/assets/images/basics/photo.webp",
+        "email": "josuenoriega.dev@gmail.com",
+        "phone": "(+58) 424-234.5678",
+        "url": "https://josuenoriega.dev.com",
+        "summary": [
+            "Autodidacta en constante aprendizaje, con interés en profundizar conocimientos para crear aplicaciones eficientes y funcionales.",
+            "\nEnfocado en desarrollar habilidades técnicas y prácticas que permitan aportar soluciones útiles a desafíos reales mediante software bien diseñado y ejecutado."
+        ],
+        "location": {
+            "address": "2712 Broadway St",
+            "postalCode": "CA 94115",
+            "city": "Caracas",
+            "countryCode": "VE",
+            "region": "Distrito Capital"
+        },
+        "profiles": [
+            {
+                "network": "X",
+                "username": "Josue Noriega",
+                "url": "https://x.com/josuenoriega",
+                "title": "Josue Noriega"
+            },
+            {
+                "network": "LinkedIn",
+                "username": "josue-noriega",
+                "url": "https://www.linkedin.com/in/josue-noriega",
+                "title": "Josue Noriega"
+            },
+            {
+                "network": "GitHub",
+                "username": "josue-noriega",
+                "url": "https://github.com/josue-noriega",
+                "title": "Josue Noriega"
+            }
+        ]
+    },
+    "skills": [
+        {
+            "name": "Web Development",
+            "level": "Master",
+            "keywords": ["HTML", "CSS", "JavaScript"]
+        },
+        {
+            "name": "Programming",
+            "level": "Intermediate",
+            "keywords": ["Python", "Java", "C++"]
+        },
+        {
+            "name": "Database Management",
+            "level": "Beginner",
+            "keywords": ["SQL", "NoSQL"]
+        }
+    ],
+    "technologies": [
+        {
+            "name": "Astro"
+        },
+        {
+            "name": "CSS"
+        },
+        {
+            "name": "HTML"
+        },
+        {
+            "name": "TypeScript"
+        }
+    ],
+    "projects": [
+        {
+            "id": "p01",
+            "name": "Portfolio",
+            "startDate": "2019-01-01",
+            "endDate": "2021-01-01",
+            "tagline": "Portfolio web personal minimalista con Astro",
+            "description": "Desarrollo completo usando Astro, diseño moderno Bento Grid, optimizado para velocidad y experiencia de usuario. Ganador en AIHacks 2016.",
+            "technologies": ["Astro", "TypeScript", "Neumorfismo CSS", "Grid CSS"],
+            "highlights": ["Alto rendimiento (100% Lighthouse)", "Ganador en AIHacks 2016"],
+            "url": "https://project.com/",
+            "imageURL": "/src/assets/images/projects/portfolio-hero.webp"
+        },
+        {
+            "id": "p02",
+            "name": "ShopSphere",
+            "startDate": "2022-03-15",
+            "endDate": "2022-09-30",
+            "tagline": "Plataforma de e-commerce completa con React y Node.js.",
+            "description": "Desarrollo de una tienda online escalable con carrito de compras, pasarela de pago Stripe y panel de administración para gestionar productos y pedidos.",
+            "technologies": ["React", "Node.js", "Express", "MongoDB", "Stripe API"],
+            "highlights": ["Procesamiento de pagos en tiempo real.", "API RESTful para la gestión de datos."],
+            "url": "https://shopsphere.example.com/",
+            "imageURL": "/src/assets/images/projects/shopsphere.webp"
+        },
+        {
+            "id": "p03",
+            "name": "ClimaNow",
+            "startDate": "2023-01-10",
+            "endDate": "2023-04-20",
+            "tagline": "Aplicación móvil del clima con geolocalización y pronósticos.",
+            "description": "App para iOS y Android desarrollada con React Native que consume la API de OpenWeatherMap para mostrar el clima actual y pronósticos de 7 días basados en la ubicación del usuario.",
+            "technologies": ["React Native", "Expo", "API REST", "JavaScript"],
+            "highlights": ["Uso de geolocalización para datos precisos.", "Interfaz de usuario limpia y animada."],
+            "url": "https://climanow.example.com/",
+            "imageURL": "/src/assets/images/projects/climanow.webp"
+        },
+        {
+            "id": "p04",
+            "name": "Inkwell",
+            "startDate": "2021-05-01",
+            "endDate": "2021-11-15",
+            "tagline": "Plataforma de blogging con editor Markdown y gestión de contenido.",
+            "description": "Creación de un CMS para blogs usando Next.js y un backend sin cabeza (Headless CMS) como Strapi. Incluye autenticación de usuarios y un editor de texto enriquecido basado en Markdown.",
+            "technologies": ["Next.js", "Strapi", "GraphQL", "Tailwind CSS"],
+            "highlights": [
+                "Renderizado del lado del servidor (SSR) para un SEO óptimo.",
+                "Sistema de autenticación JWT."
+            ],
+            "url": "https://inkwell.example.com/",
+            "imageURL": "/src/assets/images/projects/inkwell.webp"
+        },
+        {
+            "id": "p05",
+            "name": "TaskFlow",
+            "startDate": "2023-06-01",
+            "endDate": "2023-08-25",
+            "tagline": "Aplicación de gestión de tareas con drag-and-drop.",
+            "description": "Una aplicación web tipo Kanban construida con Vue.js y Firebase. Permite a los usuarios crear tableros, listas y tarjetas, y moverlas entre listas con una interfaz de arrastrar y soltar.",
+            "technologies": ["Vue.js", "Vuex", "Firebase", "Sass"],
+            "highlights": [
+                "Sincronización de datos en tiempo real con Firestore.",
+                "Interfaz interactiva con drag-and-drop."
+            ],
+            "url": "https://taskflow.example.com/",
+            "imageURL": "/src/assets/images/projects/taskflow.webp"
+        },
+        {
+            "id": "p06",
+            "name": "DataViz",
+            "startDate": "2022-10-01",
+            "endDate": "2022-12-15",
+            "tagline": "Dashboard de visualización de datos interactivo.",
+            "description": "Un dashboard para visualizar datos de ventas utilizando D3.js. Ofrece gráficos de barras, circulares y de líneas interactivos que se actualizan dinámicamente según los filtros seleccionados por el usuario.",
+            "technologies": ["D3.js", "JavaScript (ES6+)", "HTML5", "CSS Grid"],
+            "highlights": [
+                "Visualizaciones de datos complejas y personalizadas.",
+                "Alto rendimiento en la renderización de gráficos."
+            ],
+            "url": "https://dataviz.example.com/",
+            "imageURL": "/src/assets/images/projects/dataviz.webp"
+        },
+        {
+            "id": "p07",
+            "name": "CodeConnect",
+            "startDate": "2023-09-01",
+            "endDate": "2023-11-30",
+            "tagline": "Plataforma de chat en tiempo real para desarrolladores.",
+            "description": "Aplicación de chat construida con SvelteKit y WebSockets que permite a los usuarios unirse a salas temáticas sobre lenguajes de programación y tecnologías para discutir en tiempo real.",
+            "technologies": ["SvelteKit", "WebSockets", "Node.js", "Prisma"],
+            "highlights": [
+                "Comunicación bidireccional de baja latencia.",
+                "Base de datos relacional gestionada con Prisma ORM."
+            ],
+            "url": "https://codeconnect.example.com/",
+            "imageURL": "/src/assets/images/projects/codeconnect.webp"
+        }
+    ]
+}

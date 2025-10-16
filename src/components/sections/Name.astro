@@ -1,14 +1,11 @@
 ---
 import GridItem from '../base/GridItem.astro';
-import { basics } from '../../content/resume.json';
+import { basics } from '../../data/resume.json';
 const { class: className, ...rest } = Astro.props;
 const { name } = basics;
 ---
 
-
-<GridItem class:list={['section-name', className]} {...rest}>
-    <h1>{name}</h1>
-</GridItem>
+<h1 class:list={['section-name', className]} {...rest}>{name}</h1>
 
 <style>
     .section-name {

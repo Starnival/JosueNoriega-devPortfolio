@@ -9,23 +9,29 @@ const { class: className, ...rest } = Astro.props;
 <style>
     .grid-item {
         min-width: 0;
-        box-sizing: border-box; /* Evita que el padding afecte el tamaño del grid item */
-        overflow: hidden; /* Evita que el contenido desborde y afecte el tamaño del item */
-        padding: 1.5rem; /* 24px */
+        box-sizing: border-box;
+        overflow: hidden;
+        padding: 18px;
 
-        border-radius: 1rem; /* 24px */
+        border-radius: 16px;
         background-color: var(--fondo-secundario);
-        transition: all 0.3s ease-in-out;
+        transition: all 0.4s ease-in-out;
+        cursor: default;
 
-        /* Estilo Neumórfico en reposo */
-        box-shadow: 5px 5px 10px var(--sombra-oscura),
-          inset  -5px -5px 10px var(--sombra-clara);
+        /* --- NEUMORFISMO INICIAL (Relieve Suave) --- */
+        /* Reducción de 10px a 5px y de 20px a 10px */
+        box-shadow:
+            5px 5px 10px var(--sombra-oscura-fuerte),
+            -5px -5px 10px var(--sombra-clara-suave);
     }
 
     .grid-item:hover,
     .grid-item:focus-within {
-        /* Estilo Neumórfico activo (al pasar el cursor o enfocar) */
-        box-shadow: 8px 8px 16px var(--sombra-oscura),
-           inset -8px -8px 16px var(--sombra-clara);
+        /* --- NEUMORFISMO PROFUNDO (Hundimiento/Inset Más Sutil) --- */
+        /* Reducción de 12px a 6px y de 24px a 12px */
+        box-shadow:
+            /* Sombra superior izquierda (Luz) */
+            inset 6px 6px 12px var(--sombra-oscura-fuerte),
+            /* Sombra inferior derecha (Oscuridad) */ inset -6px -6px 12px var(--sombra-clara-suave);
     }
 </style>
